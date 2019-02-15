@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.net.URI;
 
 import es.voghdev.pdfviewpager.library.R;
+import es.voghdev.pdfviewpager.library.exception.CorruptPdfException;
 
 public class BasePDFPagerAdapter extends PagerAdapter {
     protected static final int FIRST_PAGE = 0;
@@ -48,7 +49,7 @@ public class BasePDFPagerAdapter extends PagerAdapter {
     protected float renderQuality;
     protected int offScreenSize;
 
-    public BasePDFPagerAdapter(Context context, String pdfPath) throws IOException {
+    public BasePDFPagerAdapter(Context context, String pdfPath) throws CorruptPdfException {
         this.pdfPath = pdfPath;
         this.context = context;
         this.renderQuality = DEFAULT_QUALITY;
@@ -60,7 +61,7 @@ public class BasePDFPagerAdapter extends PagerAdapter {
     /**
      * This constructor was added for those who want to customize ViewPager's offScreenSize attr
      */
-    public BasePDFPagerAdapter(Context context, String pdfPath, int offScreenSize) throws IOException {
+    public BasePDFPagerAdapter(Context context, String pdfPath, int offScreenSize) throws CorruptPdfException {
         this.pdfPath = pdfPath;
         this.context = context;
         this.renderQuality = DEFAULT_QUALITY;
@@ -70,8 +71,13 @@ public class BasePDFPagerAdapter extends PagerAdapter {
     }
 
     @SuppressWarnings("NewApi")
-    protected void init() throws IOException {
-        renderer = new PdfRenderer(getSeekableFileDescriptor(pdfPath));
+    protected void init() throws CorruptPdfException {
+        try {
+            renderer = new PdfRenderer(getSeekableFileDescriptor(pdfPath));
+        } catch (IOException e) {
+            throw new CorruptPdfException(e.getMessage(), e.getCause());
+        }
+
         inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         PdfRendererParams params = extractPdfParamsFromFirstPage(renderer, renderQuality);
         bitmapContainer = new SimpleBitmapPool(params);

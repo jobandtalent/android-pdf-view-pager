@@ -25,9 +25,8 @@ import android.view.ViewGroup;
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 
-import java.io.IOException;
-
 import es.voghdev.pdfviewpager.library.R;
+import es.voghdev.pdfviewpager.library.exception.CorruptPdfException;
 import es.voghdev.pdfviewpager.library.util.EmptyClickListener;
 
 public class PDFPagerAdapter extends BasePDFPagerAdapter {
@@ -37,7 +36,7 @@ public class PDFPagerAdapter extends BasePDFPagerAdapter {
     PdfScale scale = new PdfScale();
     View.OnClickListener pageClickListener = new EmptyClickListener();
 
-    public PDFPagerAdapter(Context context, String pdfPath) throws IOException {
+    public PDFPagerAdapter(Context context, String pdfPath) throws CorruptPdfException {
         super(context, pdfPath);
     }
 
@@ -125,7 +124,7 @@ public class PDFPagerAdapter extends BasePDFPagerAdapter {
             return this;
         }
 
-        public PDFPagerAdapter create() throws IOException {
+        public PDFPagerAdapter create() throws CorruptPdfException {
             PDFPagerAdapter adapter = new PDFPagerAdapter(context, pdfPath);
             adapter.scale.setScale(scale);
             adapter.scale.setCenterX(centerX);

@@ -23,12 +23,11 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Toast;
 
-import java.io.IOException;
-
 import es.voghdev.pdfviewpager.library.PDFViewPager;
 import es.voghdev.pdfviewpager.library.adapter.BasePDFPagerAdapter;
 import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter;
 import es.voghdev.pdfviewpager.library.adapter.PdfScale;
+import es.voghdev.pdfviewpager.library.exception.CorruptPdfException;
 
 public class PDFWithScaleActivity extends BaseSampleActivity {
     PDFViewPager pdfViewPager;
@@ -54,7 +53,7 @@ public class PDFWithScaleActivity extends BaseSampleActivity {
                     })
                     .create()
             );
-        } catch (IOException e) {
+        } catch (CorruptPdfException e) {
             e.printStackTrace();
         }
     }

@@ -20,11 +20,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.io.IOException;
-
 import es.voghdev.pdfviewpager.library.PDFViewPager;
 import es.voghdev.pdfviewpager.library.adapter.BasePDFPagerAdapter;
 import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter;
+import es.voghdev.pdfviewpager.library.exception.CorruptPdfException;
 
 public class MainActivity extends BaseSampleActivity {
     PDFViewPager pdfViewPager;
@@ -41,7 +40,7 @@ public class MainActivity extends BaseSampleActivity {
         try {
             adapter = new PDFPagerAdapter(this, "sample.pdf");
             pdfViewPager.setAdapter(adapter);
-        } catch (IOException exception) {
+        } catch (CorruptPdfException exception) {
             exception.printStackTrace();
         }
     }

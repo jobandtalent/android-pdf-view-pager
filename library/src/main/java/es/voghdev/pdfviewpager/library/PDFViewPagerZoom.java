@@ -20,21 +20,20 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-import java.io.IOException;
-
 import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter;
 import es.voghdev.pdfviewpager.library.adapter.PdfScale;
+import es.voghdev.pdfviewpager.library.exception.CorruptPdfException;
 
 public class PDFViewPagerZoom extends PDFViewPager {
-    public PDFViewPagerZoom(Context context, String pdfPath) throws IOException {
+    public PDFViewPagerZoom(Context context, String pdfPath) throws CorruptPdfException {
         super(context, pdfPath);
     }
 
-    public PDFViewPagerZoom(Context context, AttributeSet attrs) throws IOException {
+    public PDFViewPagerZoom(Context context, AttributeSet attrs) throws CorruptPdfException {
         super(context, attrs);
     }
 
-    protected void initAdapter(Context context, String pdfPath) throws IOException {
+    protected void initAdapter(Context context, String pdfPath) throws CorruptPdfException {
         setAdapter(new PDFPagerAdapter.Builder(context)
                 .setPdfPath(pdfPath)
                 .setOffScreenSize(getOffscreenPageLimit())
@@ -42,7 +41,7 @@ public class PDFViewPagerZoom extends PDFViewPager {
         );
     }
 
-    protected void init(AttributeSet attrs) throws IOException {
+    protected void init(AttributeSet attrs) throws CorruptPdfException {
         if (isInEditMode()) {
             setBackgroundResource(R.drawable.flaticon_pdf_dummy);
             return;

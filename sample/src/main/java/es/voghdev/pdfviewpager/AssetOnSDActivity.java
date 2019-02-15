@@ -23,12 +23,12 @@ import android.os.Handler;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.IOException;
 
 import es.voghdev.pdfviewpager.library.PDFViewPager;
 import es.voghdev.pdfviewpager.library.adapter.BasePDFPagerAdapter;
 import es.voghdev.pdfviewpager.library.asset.CopyAsset;
 import es.voghdev.pdfviewpager.library.asset.CopyAssetThreadImpl;
+import es.voghdev.pdfviewpager.library.exception.CorruptPdfException;
 
 public class AssetOnSDActivity extends BaseSampleActivity {
     final String[] sampleAssets = {"adobe.pdf", "sample.pdf"};
@@ -54,7 +54,7 @@ public class AssetOnSDActivity extends BaseSampleActivity {
                 try {
                     pdfViewPager = new PDFViewPager(context, getPdfPathOnSDCard());
                     setContentView(pdfViewPager);
-                } catch (IOException e) {
+                } catch (CorruptPdfException e) {
                     failure(e);
                 }
             }

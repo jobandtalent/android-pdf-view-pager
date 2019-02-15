@@ -2,12 +2,12 @@ package es.voghdev.pdfviewpager.library.adapter
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
+import es.voghdev.pdfviewpager.library.exception.CorruptPdfException
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
-import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
 class PDFPagerAdapterTest {
@@ -31,7 +31,7 @@ class PDFPagerAdapterTest {
         }
     }
 
-    @Test(expected = IOException::class)
+    @Test(expected = CorruptPdfException::class)
     fun shouldThrowExceptionIfPdfIsNotValid() {
         PDFPagerAdapter(context, tempFile.absolutePath)
     }
