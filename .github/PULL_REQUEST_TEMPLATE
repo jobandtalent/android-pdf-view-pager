@@ -1,0 +1,33 @@
+### :tophat: What is the goal?
+
+_Provide a description of the overall goal (you can usually copy the one from the issue)_
+
+### How is it being implemented?
+
+_Provide a description of the implementation_
+
+### Captures, GIF or Videos (UI Tasks)
+
+_Provide a media content about UI tasks_
+
+### QA Risks
+
+_Describe the impact of this PR_
+
+### How can it be tested?
+
+_If it cannot be tested explain why._
+
+- [ ] **Use case 1:** _A brief description of the use case_
+GIVEN 
+WHEN 
+THEN 
+
+- [ ] **Use case 2:** _A brief description of the use case_
+GIVEN 
+WHEN 
+THEN 
+
+### GIF
+
+![something](gif_url)
