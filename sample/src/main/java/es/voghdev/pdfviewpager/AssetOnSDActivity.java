@@ -28,6 +28,7 @@ import es.voghdev.pdfviewpager.library.PDFViewPager;
 import es.voghdev.pdfviewpager.library.adapter.BasePDFPagerAdapter;
 import es.voghdev.pdfviewpager.library.asset.CopyAsset;
 import es.voghdev.pdfviewpager.library.asset.CopyAssetThreadImpl;
+import es.voghdev.pdfviewpager.library.exception.CorruptPdfException;
 
 public class AssetOnSDActivity extends BaseSampleActivity {
     final String[] sampleAssets = {"adobe.pdf", "sample.pdf"};
@@ -50,8 +51,12 @@ public class AssetOnSDActivity extends BaseSampleActivity {
         CopyAsset copyAsset = new CopyAssetThreadImpl(getApplicationContext(), new Handler(), new CopyAsset.Listener() {
             @Override
             public void success(String assetName, String destinationPath) {
-                pdfViewPager = new PDFViewPager(context, getPdfPathOnSDCard());
-                setContentView(pdfViewPager);
+                try {
+                    pdfViewPager = new PDFViewPager(context, getPdfPathOnSDCard());
+                    setContentView(pdfViewPager);
+                } catch (CorruptPdfException e) {
+                    failure(e);
+                }
             }
 
             @Override

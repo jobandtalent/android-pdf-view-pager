@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 
 import es.voghdev.pdfviewpager.library.RemotePDFViewPager;
 import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter;
+import es.voghdev.pdfviewpager.library.exception.CorruptPdfException;
 import es.voghdev.pdfviewpager.library.remote.DownloadFile;
 import es.voghdev.pdfviewpager.library.util.FileUtil;
 
@@ -99,10 +100,14 @@ public class RemotePDFActivity extends BaseSampleActivity implements DownloadFil
 
     @Override
     public void onSuccess(String url, String destinationPath) {
-        adapter = new PDFPagerAdapter(this, FileUtil.extractFileNameFromURL(url));
-        remotePDFViewPager.setAdapter(adapter);
-        updateLayout();
-        showDownloadButton();
+        try {
+            adapter = new PDFPagerAdapter(this, FileUtil.extractFileNameFromURL(url));
+            remotePDFViewPager.setAdapter(adapter);
+            updateLayout();
+            showDownloadButton();
+        } catch (CorruptPdfException exception) {
+            onFailure(exception);
+        }
     }
 
     @Override

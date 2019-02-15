@@ -23,6 +23,7 @@ import android.widget.Toast;
 import es.voghdev.pdfviewpager.library.PDFViewPager;
 import es.voghdev.pdfviewpager.library.adapter.BasePDFPagerAdapter;
 import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter;
+import es.voghdev.pdfviewpager.library.exception.CorruptPdfException;
 
 public class MainActivity extends BaseSampleActivity {
     PDFViewPager pdfViewPager;
@@ -36,8 +37,12 @@ public class MainActivity extends BaseSampleActivity {
 
         pdfViewPager = (PDFViewPager) findViewById(R.id.pdfViewPager);
 
-        adapter = new PDFPagerAdapter(this, "sample.pdf");
-        pdfViewPager.setAdapter(adapter);
+        try {
+            adapter = new PDFPagerAdapter(this, "sample.pdf");
+            pdfViewPager.setAdapter(adapter);
+        } catch (CorruptPdfException exception) {
+            exception.printStackTrace();
+        }
     }
 
     @Override
