@@ -23,6 +23,7 @@ import android.os.Handler;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
 
 import es.voghdev.pdfviewpager.library.PDFViewPager;
 import es.voghdev.pdfviewpager.library.adapter.BasePDFPagerAdapter;
@@ -50,8 +51,12 @@ public class AssetOnSDActivity extends BaseSampleActivity {
         CopyAsset copyAsset = new CopyAssetThreadImpl(getApplicationContext(), new Handler(), new CopyAsset.Listener() {
             @Override
             public void success(String assetName, String destinationPath) {
-                pdfViewPager = new PDFViewPager(context, getPdfPathOnSDCard());
-                setContentView(pdfViewPager);
+                try {
+                    pdfViewPager = new PDFViewPager(context, getPdfPathOnSDCard());
+                    setContentView(pdfViewPager);
+                } catch (IOException e) {
+                    failure(e);
+                }
             }
 
             @Override

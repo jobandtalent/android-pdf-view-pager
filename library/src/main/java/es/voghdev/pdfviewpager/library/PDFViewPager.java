@@ -21,28 +21,30 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import java.io.IOException;
+
 import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter;
 
 public class PDFViewPager extends ViewPager {
     protected Context context;
 
-    public PDFViewPager(Context context, String pdfPath) {
+    public PDFViewPager(Context context, String pdfPath) throws IOException {
         super(context);
         this.context = context;
         init(pdfPath);
     }
 
-    public PDFViewPager(Context context, AttributeSet attrs) {
+    public PDFViewPager(Context context, AttributeSet attrs) throws IOException {
         super(context, attrs);
         this.context = context;
         init(attrs);
     }
 
-    protected void init(String pdfPath) {
+    protected void init(String pdfPath) throws IOException {
         initAdapter(context, pdfPath);
     }
 
-    protected void init(AttributeSet attrs) {
+    protected void init(AttributeSet attrs) throws IOException {
         if (isInEditMode()) {
             setBackgroundResource(R.drawable.flaticon_pdf_dummy);
             return;
@@ -62,7 +64,7 @@ public class PDFViewPager extends ViewPager {
         }
     }
 
-    protected void initAdapter(Context context, String pdfPath) {
+    protected void initAdapter(Context context, String pdfPath) throws IOException {
         setAdapter(new PDFPagerAdapter.Builder(context)
                 .setPdfPath(pdfPath)
                 .setOffScreenSize(getOffscreenPageLimit())

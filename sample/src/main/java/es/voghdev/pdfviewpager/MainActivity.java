@@ -20,6 +20,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 import es.voghdev.pdfviewpager.library.PDFViewPager;
 import es.voghdev.pdfviewpager.library.adapter.BasePDFPagerAdapter;
 import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter;
@@ -36,8 +38,12 @@ public class MainActivity extends BaseSampleActivity {
 
         pdfViewPager = (PDFViewPager) findViewById(R.id.pdfViewPager);
 
-        adapter = new PDFPagerAdapter(this, "sample.pdf");
-        pdfViewPager.setAdapter(adapter);
+        try {
+            adapter = new PDFPagerAdapter(this, "sample.pdf");
+            pdfViewPager.setAdapter(adapter);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
     }
 
     @Override

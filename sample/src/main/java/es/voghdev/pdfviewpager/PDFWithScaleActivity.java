@@ -23,6 +23,8 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 import es.voghdev.pdfviewpager.library.PDFViewPager;
 import es.voghdev.pdfviewpager.library.adapter.BasePDFPagerAdapter;
 import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter;
@@ -36,20 +38,25 @@ public class PDFWithScaleActivity extends BaseSampleActivity {
         super.onCreate(savedInstanceState);
 
         setTitle(R.string.menu_sample9_txt);
-        pdfViewPager = new PDFViewPager(this, "moby.pdf");
-        setContentView(pdfViewPager);
-        pdfViewPager.setAdapter(new PDFPagerAdapter.Builder(this)
-                .setPdfPath("moby.pdf")
-                .setScale(getPdfScale())
-                .setOnPageClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        pdfViewPager.setVisibility(View.GONE);
-                        Toast.makeText(PDFWithScaleActivity.this, R.string.page_was_clicked, Toast.LENGTH_LONG).show();
-                    }
-                })
-                .create()
-        );
+
+        try {
+            pdfViewPager = new PDFViewPager(this, "moby.pdf");
+            setContentView(pdfViewPager);
+            pdfViewPager.setAdapter(new PDFPagerAdapter.Builder(this)
+                    .setPdfPath("moby.pdf")
+                    .setScale(getPdfScale())
+                    .setOnPageClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            pdfViewPager.setVisibility(View.GONE);
+                            Toast.makeText(PDFWithScaleActivity.this, R.string.page_was_clicked, Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .create()
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private PdfScale getPdfScale() {
