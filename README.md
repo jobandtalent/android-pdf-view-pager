@@ -14,9 +14,18 @@ If you are targeting pre-Lollipop devices, have a look at the [legacy sample][7]
 Installation
 ------------
 
+Add repository
+
+    repositories {
+        maven {
+            url  "https://dl.bintray.com/jobandtalent/artifacts"
+        }
+    }
+
+
 Add this line in your *app/build.gradle*
 
-    compile 'es.voghdev.pdfviewpager:library:1.0.6'
+    implementation "com.jobandtalent:android-pdf-view-pager:1.0.1"
 
 Usage
 -----
