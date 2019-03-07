@@ -4,30 +4,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'checkstyle'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
-
-ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'pdfviewpager'
-
-    publishedGroupId = 'es.voghdev.pdfviewpager'
-    libraryName = 'PdfViewPager'
-    artifact = 'library'
-
-    libraryDescription = 'Android widget to display PDF documents in your Views, Activities or Fragments.'
-
-    siteUrl = 'https://github.com/voghDev/PdfViewPager'
-    gitUrl = 'https://github.com/voghDev/PdfViewPager.git'
-
-    libraryVersion = '1.0.6'
-
-    developerId = 'voghDev'
-    developerName = 'Olmo Gallegos'
-    developerEmail = 'vendofiatpunto@hotmail.com'
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
-}
+apply from: '../publish.gradle'
 
 android {
     compileSdkVersion 27
@@ -70,50 +47,59 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
 }
 
-// Bintray installing and uploading scripts
-// Can be found here: https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle
-// And here: https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle
+// for Bintray
+def libGit = libGit;
+def libUrl = libUrl;
+def libDescription = libDescription
+def libGroupId = libGroupId;
+def libArtifactId = libArtifactId;
 
-group = publishedGroupId                               // Maven Group ID for the artifact
-version = libraryVersion
-
+// for Maven
+group = libGroupId
+version = projectVersionName
 install {
     repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
-                packaging 'aar'
-                groupId publishedGroupId
-                artifactId artifact
+        pom.project {
+            name libArtifactId
+            description libDescription
+            url libUrl
+            inceptionYear '2019'
 
-                // Add your description here
-                name libraryName
-                description libraryDescription
-                url siteUrl
+            packaging 'aar'
+            groupId libGroupId
+            artifactId libArtifactId
+            version projectVersionName
 
-                // Set your license
-                licenses {
-                    license {
-                        name licenseName
-                        url licenseUrl
-                    }
-                }
-                developers {
-                    developer {
-                        id developerId
-                        name developerName
-                        email developerEmail
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-
+            licenses {
+                license {
+                    name 'Apache-2.0'
+                    url libLicenseUrl
                 }
             }
         }
     }
+}
+
+// Bintray
+Properties properties = new Properties()
+File propertiesFile = file(project.rootProject.file('local.properties'))
+if (propertiesFile.exists())
+    properties.load(propertiesFile.newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    pkg {
+        repo = 'artifacts'
+        name = libArtifactId
+        userOrg = 'jobandtalent'
+        licenses = ['Apache-2.0']
+        vcsUrl = libGit
+        version {
+            name = projectVersionName
+        }
+    }
+    configurations = ['archives']
 }
 
 if (project.hasProperty("android")) { // Android libraries
@@ -133,43 +119,3 @@ if (project.hasProperty("android")) { // Android libraries
     }
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-// Bintray
-Properties properties = new Properties()
-File propertiesFile = file(project.rootProject.file('local.properties'))
-if (propertiesFile.exists())
-    properties.load(propertiesFile.newDataInputStream())
-
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-
-    configurations = ['archives']
-    pkg {
-        repo = bintrayRepo
-        name = bintrayName
-        desc = libraryDescription
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = allLicenses
-        publish = true
-        publicDownloadNumbers = true
-        version {
-            desc = libraryDescription
-            gpg {
-                sign = true //Determines whether to GPG sign the files. The default is false
-                passphrase = properties.getProperty("bintray.gpg.password")
-                //Optional. The passphrase for GPG signing'
-            }
-        }
-    }
-}
