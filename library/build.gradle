@@ -2,8 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 apply plugin: 'checkstyle'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.vanniktech.maven.publish'
 
 android {
     compileSdk 27
@@ -48,74 +47,15 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
 }
 
-// for Bintray
-def libGit = libGit
-def libUrl = libUrl
-def libDescription = libDescription
-def libGroupId = libGroupId
-def libArtifactId = libArtifactId
-
-// for Maven
-group = libGroupId
-version = projectVersionName
-install {
-    repositories.mavenInstaller {
-        pom.project {
-            name libArtifactId
-            description libDescription
-            url libUrl
-            inceptionYear '2019'
-
-            packaging 'aar'
-            groupId libGroupId
-            artifactId libArtifactId
-            version projectVersionName
-
-            licenses {
-                license {
-                    name 'Apache-2.0'
-                    url libLicenseUrl
-                }
+publishing {
+    repositories {
+        maven {
+            name = "GithubPackages"
+            url = uri("https://maven.pkg.github.com/jobandtalent/android-pdf-view-pager")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
             }
         }
-    }
-}
-
-// Bintray
-Properties properties = new Properties()
-File propertiesFile = file(project.rootProject.file('local.properties'))
-if (propertiesFile.exists())
-    properties.load(propertiesFile.newDataInputStream())
-
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-    pkg {
-        repo = 'artifacts'
-        name = libArtifactId
-        userOrg = 'jobandtalent'
-        licenses = ['Apache-2.0']
-        vcsUrl = libGit
-        version {
-            name = projectVersionName
-        }
-    }
-    configurations = ['archives']
-}
-
-if (project.hasProperty("android")) { // Android libraries
-    task sourcesJar(type: Jar) {
-        classifier = 'sources'
-        from android.sourceSets.main.java.srcDirs
-    }
-
-    task javadoc(type: Javadoc) {
-        source = android.sourceSets.main.java.srcDirs
-        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    }
-} else { // Java libraries
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        classifier = 'sources'
-        from sourceSets.main.allSource
     }
 }

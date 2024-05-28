@@ -7,8 +7,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.4.1'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.2'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        classpath 'com.vanniktech.maven.publish:com.vanniktech.maven.publish.gradle.plugin:0.22.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
