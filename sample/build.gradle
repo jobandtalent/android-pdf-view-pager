@@ -2,7 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'checkstyle'
 
 android {
-    compileSdkVersion 27
+    compileSdk 27
+    namespace 'es.voghdev.pdfviewpager'
 
     defaultConfig {
         applicationId "es.voghdev.pdfviewpager"
@@ -17,12 +18,14 @@ android {
         }
     }
 
-    lintOptions {
+    lint {
         abortOnError false
     }
 
     packagingOptions {
-        exclude 'LICENSE.txt'
+        resources {
+            excludes += ['LICENSE.txt']
+        }
     }
 }
 
