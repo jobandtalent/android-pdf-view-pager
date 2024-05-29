@@ -21,7 +21,7 @@ Add repository
 
 Add this line in your *app/build.gradle*
 
-    implementation "com.jobandtalent:android-pdf-view-pager:1.0.1"
+    implementation "com.jobandtalent:android-pdf-view-pager:1.1.0"
 
 Usage
 -----

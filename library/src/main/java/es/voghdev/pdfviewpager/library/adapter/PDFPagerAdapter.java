@@ -18,9 +18,10 @@ package es.voghdev.pdfviewpager.library.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.pdf.PdfRenderer;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.viewpager.widget.ViewPager;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
