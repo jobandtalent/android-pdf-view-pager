@@ -1,16 +1,15 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 apply plugin: 'checkstyle'
 apply plugin: 'com.vanniktech.maven.publish'
 
 android {
-    compileSdk 27
+    compileSdkVersion 36
     namespace 'es.voghdev.pdfviewpager.library'
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 27
+        minSdkVersion 21
+        targetSdkVersion 36
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
@@ -27,7 +26,7 @@ android {
     }
 }
 
-task checkstyle(type: Checkstyle) {
+tasks.register('checkstyle', Checkstyle) {
     configFile = rootProject.file('config/checkstyle.xml')
 
     source 'src'
@@ -39,11 +38,10 @@ task checkstyle(type: Checkstyle) {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view-androidx:3.10.0'
-    implementation 'androidx.viewpager:viewpager:1.0.0'
+    implementation 'androidx.viewpager:viewpager:1.1.0'
 
-    androidTestImplementation 'junit:junit:4.12'
+    androidTestImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
 }
 
