@@ -27,7 +27,7 @@ android {
     }
 }
 
-task checkstyle(type: Checkstyle) {
+tasks.register('checkstyle', Checkstyle) {
     configFile = rootProject.file('config/checkstyle.xml')
 
     source 'src'
