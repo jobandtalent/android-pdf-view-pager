@@ -5,12 +5,12 @@ apply plugin: 'checkstyle'
 apply plugin: 'com.vanniktech.maven.publish'
 
 android {
-    compileSdk 27
+    compileSdkVersion 36
     namespace 'es.voghdev.pdfviewpager.library'
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 27
+        minSdkVersion 21
+        targetSdkVersion 36
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
     buildTypes {

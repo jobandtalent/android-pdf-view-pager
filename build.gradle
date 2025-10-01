@@ -3,10 +3,10 @@ buildscript {
     ext.kotlin_version = '1.6.21'
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.4.1'
+        classpath 'com.android.tools.build:gradle:8.13.0'
         classpath 'com.vanniktech.maven.publish:com.vanniktech.maven.publish.gradle.plugin:0.22.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
@@ -15,9 +15,9 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
         maven {
             url "https://maven.google.com"
-        } // This dep should be replaceable by google()
+        }
+        mavenCentral() // This dep should be replaceable by google()
     }
 }
